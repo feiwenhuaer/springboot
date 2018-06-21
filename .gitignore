@@ -9,4 +9,3 @@ log/
 application.yml
 mybatis-config.xml
 application-dev.yml
-!application-*.yml
