@@ -48,7 +48,15 @@ public class ArticleController {
         }
         return "login";
     }
-
+    @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
+    public String toAdd(HttpServletRequest request, ModelMap modelMap) {
+        if (userUtil.isLogin(request)) {
+            modelMap.put("user", userUtil.getUser(request));
+            return "addBlog";
+        }
+        return "login";
+    }
+    @ResponseBody
     @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
     public ServerResponse addArticle(@RequestParam("articleContent")String articleContent, @RequestParam("title")String title
             , HttpServletRequest request) {

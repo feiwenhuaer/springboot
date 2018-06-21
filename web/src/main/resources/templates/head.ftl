@@ -53,7 +53,7 @@
               <li><a href="components.html"><b class="badge pull-right">18</b>Components</a></li>
             </ul> -->
         </li>
-        <li><a href="/log"><i class="icon-edit icon-xlarge"></i>日志</a></li>
+        <li><a href="/article/toAdd"><i class="icon-edit icon-xlarge"></i>博客</a></li>
 <#--
         <li class="active"><a href="chart.html"><i class="icon-signal icon-xlarge"></i>Chart</a></li>
 -->
