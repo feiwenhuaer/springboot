@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>first</title>
+    <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]>
+    <script src="/js/ie/respond.min.js"></script>
+    <script src="/js/ie/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<#import "head.ftl" as lib />
+<@lib.head />
+<section id="content">
+    <section class="main padder">
+        <div class="clearfix">
+            <h4><i class="icon-table"></i>查看</h4>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        浏览
+                    </header>
+                    <div class="row text-small">
+                        <div class="col-lg-4 m-b-mini">
+                            <select class="input-small inline form-control" style="width:130px">
+                                <option value="0">分类</option>
+                                <option value="1">Delete selected</option>
+                                <option value="2">Bulk edit</option>
+                                <option value="3">Export</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <input type="text" class="input-small form-control" placeholder="文章名称">
+                                <span class="input-group-btn">
+                  </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <input type="text" class="input-small form-control" placeholder="Search">
+                                <span class="input-group-btn">
+                    <button class="btn btn-small btn-white" type="button">Go!</button>
+                  </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-out m-t-small">
+                        <table class="table table-striped b-t text-small">
+                            <thead>
+                            <tr>
+                                <th width="20"><input type="checkbox"></th>
+                                <th class="th-sortable" data-toggle="class">Project
+                                    <span class="th-sort">
+                                        <i class="icon-sort-down text"></i>
+                                        <i class="icon-sort-up text-active"></i>
+                                        <i class="icon-sort"></i>
+                                    </span>
+                                </th>
+                                <th>Task</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <#list data.data as item>
+                                    <tr>
+                                        <td><input type="checkbox" name="post[]" value="8"></td>
+                                        <td>${item.title}</td>
+                                        <td>${item.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" onclick="location.href='/index/findById/${item.id}'" class="active" data-toggle="class">查看</a>
+                                        </td>
+                                    </tr>
+                                </#list>
+                            </tbody>
+                        </table>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-12 text-right text-center-sm">
+                                <ul class="pagination pagination-small m-t-none m-b-none">
+                                    <li><a href="#"><i class="icon-chevron-left"></i></a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#"><i class="icon-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+               <!-- <section class="panel">
+                    <header class="panel-heading">
+                        分类统计
+                    </header>
+                    <div class="pull-out m-t-small">
+                        <table class="table table-striped b-t text-small">
+                            <thead>
+                            <tr>
+                                <th width="20"><input type="checkbox"></th>
+                                <th class="th-sortable" data-toggle="class">Project
+                                    <span class="th-sort">
+                        <i class="icon-sort-down text"></i>
+                        <i class="icon-sort-up text-active"></i>
+                        <i class="icon-sort"></i>
+                      </span>
+                                </th>
+                                <th>Task</th>
+                                <th>Date</th>
+                                <th width="30"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input type="checkbox" name="post[]" value="2"></td>
+                                <td>Idrawfast</td>
+                                <td>4c</td>
+                                <td>Jul 25, 2013</td>
+                                <td>
+                                    <a href="#" class="active" data-toggle="class"><i
+                                            class="icon-ok icon-large text-success text-active"></i><i
+                                            class="icon-remove icon-large text-danger text"></i></a>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-12 text-right text-center-sm">
+                                <ul class="pagination pagination-small m-t-none m-b-none">
+                                    <li><a href="#"><i class="icon-chevron-left"></i></a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#"><i class="icon-chevron-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </footer>
+                </section>-->
+            </div>
+        </div>
+    </section>
+</section>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/app.data.js"></script>
+</body>
+</html>

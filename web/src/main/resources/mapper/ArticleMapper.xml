@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ ~
+ ~ @author 
+ ~ @date 2018-05-17 15:47:28
+ ~ Created by xieyi
+-->
+
+<mapper namespace="ocean.dao.ArticleMapper">
+    <resultMap id="ArticleMap" type="Article">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="title"/>
+        <result property="articleContent" column="article_content"/>
+        <result property="type" column="type"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
+        <result property="headPic" column="head_pic"/>
+    </resultMap>
+
+    <sql id="tb">
+        article
+    </sql>
+
+    <sql id="columns_all">
+        id,
+        <include refid="columns_exclude_id"/>
+    </sql>
+
+    <sql id="columns_exclude_id">
+        `user_id`, `title`, `article_content`, `type`, `create_time`, `update_time`, `head_pic`
+    </sql>
+
+    <sql id="values_exclude_id">
+        #{userId}, #{title}, #{articleContent}, #{type}, now(), now(), #{headPic}
+    </sql>
+
+    <sql id="criteriaForEdit">
+        <set>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="articleContent != null">article_content = #{articleContent},</if>
+            <if test="title != null">title = #{title},</if>
+            update_time=now()
+        </set>
+    </sql>
+    <sql id="criteria">
+        <where>
+            <if test="userId != null">AND `user_id` = #{userId}</if>
+            <if test="title != null">AND `title` = #{title}</if>
+            <if test="articleContent != null">AND `article_content` = #{articleContent}</if>
+            <if test="type != null">AND `type` = #{type}</if>
+            <if test="createTime != null">AND `create_time` = #{createTime}</if>
+            <if test="updateTime != null">AND `update_time` = #{updateTime}</if>
+            <if test="status != null">AND `status` = #{status}</if>
+            <if test="headPic != null">AND `head_pic` = #{headPic}</if>
+        </where>
+    </sql>
+
+    <select id="findById" resultType="Article">
+        select
+        <include refid="columns_all"/>
+        from
+        <include refid="tb"/>
+        where id = #{id} AND status=1
+    </select>
+
+    <select id="getByType" resultType="Article">
+        SELECT
+        <include refid="columns_all"/>
+        FROM
+        <include refid="tb"/>
+        WHERE status=1
+        <if test="type != null">
+            AND type=#{type}
+        </if>
+        <if test="userId != null">
+            AND user_id=#{userId}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="getAll" parameterType="map" resultType="Article">
+        SELECT
+        <include refid="columns_all"/>
+        FROM
+        <include refid="tb"/>
+        WHERE status=1
+        <if test="userId != null">
+            AND user_id=#{userId}
+        </if>
+        ORDER BY create_time DESC
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+        <if test="offset != null">
+            offset #{offset}
+        </if>
+    </select>
+
+    <select id="count" resultType="Integer">
+        SELECT
+        count(id)
+        FROM
+        <include refid="tb"/>
+        WHERE status=1
+        <if test="userId != null">
+            AND user_id=#{userId}
+        </if>
+    </select>
+
+    <delete id="deleteByHard">
+        DELETE FROM
+        <include refid="tb"/>
+        WHERE id=#{id} AND user_id=#{userId}
+    </delete>
+
+    <update id="deleteBySoft">
+        UPDATE
+        <include refid="tb"/>
+        SET status=0
+        WHERE id=#{id} AND user_id=#{userId}
+    </update>
+
+    <insert id="addArticle" parameterType="Article" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb"/>
+        (<include refid="columns_exclude_id"/>)
+        VALUES
+        (<include refid="values_exclude_id"/>)
+    </insert>
+
+    <update id="saveEdit" parameterType="Article">
+        UPDATE
+        <include refid="tb"/>
+        <include refid="criteriaForEdit"/>
+        WHERE id = #{id}
+    </update>
+</mapper>

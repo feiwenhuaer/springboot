@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ ~
+ ~ @author 
+ ~ @date 2018-04-28 16:17:46
+ ~ Created by .
+-->
+
+<mapper namespace="ocean.dao.UserMapper">
+
+    <sql id="tb">
+        `user`
+    </sql>
+
+    <sql id="columns_forselect">
+        `id`,`phone`, `email`,  `name`, `user_type`, `age`, `job`, `description`, `head_url`, `join_time`, `status`
+    </sql>
+
+    <sql id="columns_exclude_id">
+        `phone`, `email`, `password`, `name`, `user_type`, `age`, `job`, `description`, `head_url`, `join_time`, `status`
+    </sql>
+
+    <sql id="values_exclude_id">
+        #{phone}, #{email}, #{password}, #{name}, #{userType}, #{age}, #{job}, #{description}, #{headUrl}, now(),#{status}
+    </sql>
+
+    <select id="checkUser" parameterType="User" resultType="User">
+        SELECT `id`,`email`,`phone`,`name`
+        FROM
+        <include refid="tb"/>
+        WHERE
+        status = 1
+        <if test="email != null">
+            and email=#{email}
+        </if>
+        <if test="phone != null">
+            and phone=#{phone}
+        </if>
+        <if test="password != null">
+            and password=#{password}
+        </if>
+    </select>
+
+    <select id="isExist" parameterType="User" resultType="Integer">
+        SELECT COUNT(`id`)
+        FROM
+        <include refid="tb"/>
+        where
+        status = 1
+        <if test="email != null">
+            and email=#{email}
+        </if>
+        <if test="phone != null">
+            and phone=#{phone}
+        </if>
+    </select>
+
+    <select id="getProfile" parameterType="Integer" resultType="User">
+        SELECT
+        <include refid="columns_forselect"/>
+        FROM
+        <include refid="tb"/>
+        WHERE id = #{uid}
+    </select>
+
+    <insert id="toRegis" parameterType="User" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO <include refid="tb" />
+        (<include refid="columns_exclude_id" />)
+        VALUES
+        (<include refid="values_exclude_id" />)
+    </insert>
+</mapper>

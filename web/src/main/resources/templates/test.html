@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]>
+    <script src="/js/ie/respond.min.js"></script>
+    <script src="/js/ie/html5.js"></script>
+    <![endif]-->
+    <script src="/js/wangEditor.min.js"></script>
+</head>
+<body>
+<#import "head.html" as lib />
+<@lib.head />
+<div class="container">
+    <div class="row">
+        <input type="text" id="phone" size="50" class="" >
+        <input type="text" id="password" size="50" class="" >
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-default" onclick="toLogin()">登录111112</button>
+    </div>
+    <div class="container">
+        <form id="headform" class=" col-md-12" enctype="multipart/form-data" style="margin-top:20px">
+            <input type="file" name="fileList" class="" multiple="multiple" onchange="console.log('文件刷新')">
+        </form>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-default" onclick="uploadPhoto()">上传图片</button>
+    </div>
+    <div class="row">
+        <input type="text" id="title" class="" size="100" >
+    </div>
+    <div id="editor" class="container">
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-default" onclick="addArticle()">添加文章</button>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-default" onclick="getAll()">获取全部文章</button>
+    </div>
+    <div class="container">
+        <ul id="articleArea"></ul>
+    </div>
+    <div class="container">
+        <ul id="articlePanel"></ul>
+    </div>
+</div>
+<script src="../js/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../js/bootstrap.js"></script>
+<!-- app -->
+<script src="../js/app.js"></script>
+<script src="../js/app.plugin.js"></script>
+<script src="../js/app.data.js"></script>
+<!-- Sparkline Chart -->
+<script src="../js/charts/sparkline/jquery.sparkline.min.js"></script>
+<script src="../js/ie/excanvas.js"></script>
+<!-- Easy Pie Chart -->
+<script src="../js/charts/easypiechart/jquery.easy-pie-chart.js"></script>
+<script>
+    function toLogin(){
+        $.ajax({
+            type : 'Post',
+            url : '/api/user/login',
+            data: {"phone":$("#phone").val(),"password":$("#password").val()},
+            dataType : 'json',
+            success : function(obj) {
+
+            }
+        })
+    }
+    /* 清空input文件框的值   $("#headform")[0].reset()*/
+    function uploadPhoto() {
+        var formData = new FormData($("#headform")[0]);
+        $.ajax({
+            url : "api/image/addPic",
+            type : "POST",
+            data : formData,
+            contentType : false,
+            processData : false,
+            success : function(object) {
+            }
+        })
+    }
+    function addArticle() {
+        $.ajax({
+            url : "api/article/addArticle",
+            type : "POST",
+            data : {"title":$("#title").val(),"articleContent":$("#articleContent").val()},
+            dataType: 'json',
+            success : function(object) {
+            }
+        })
+    }
+    function  getAll() {
+        $("#articleArea").html("")
+        $.ajax({
+            url : "api/article/getAll",
+            type : "GET",
+            dataType: 'json',
+            success : function(object) {
+                var obj = object.responseList;
+                if(obj != undefined) {
+                    var str="";
+                    for (var i = 0; i < obj.length; i++) {
+                        str += "<li class='listItem' id="+obj[i].id+">"
+                            +obj[i].title
+                            +"</li>"
+                    }
+                    $("#articleArea").html(str)
+                }else{
+                    alert(object.msg)
+                }
+            }
+        })
+    }
+    $("#articleArea").delegate('li','click',function () {
+        $.ajax({
+            url : "api/article/getById",
+            type : "get",
+            data : {"id": $(this).attr("id")},
+            success : function(object) {
+                var obj = object.responseList;
+                if(obj != undefined) {
+                    editor.txt.html((obj.articleContent))
+                    $("#articlePanel").html(obj.articleContent)
+                    console.log($("#articlePanel").text())
+                }else {
+                    alert(object.msg)
+                }
+            }
+        })
+    })
+
+
+    function addArticle() {
+        $.ajax({
+            url : "api/article/addArticle",
+            type : "POST",
+            data : {"title":$("#title").val(),"articleContent":editor.txt.html()},
+            success : function(object) {
+                var obj = object.responseList;
+                if(obj != undefined) {
+                }else {
+                    alert(object.msg)
+                }
+            }
+        })
+    }
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    // 或者 var editor = new E( document.getElementById('editor') )
+    editor.create()
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ ~
+ ~ @author 
+ ~ @date 2018-04-28 16:17:46
+ ~ Created by .
+-->
+
+<mapper namespace="ocean.dao.ImageMapper">
+    <resultMap id="ImageMap" type="Image">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="picUrl" column="pic_url"/>
+        <result property="type" column="type"/>
+        <result property="describe" column="describe"/>
+        <result property="uploadTime" column="upload_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="tb">
+       image
+    </sql>
+
+    <sql id="columns_all">
+        id,
+        <include refid="columns_exclude_id"/>
+    </sql>
+
+    <sql id="columns_exclude_id">
+        `user_id`, `pic_url`, `type`, `describe`, `upload_time`, `status`
+    </sql>
+
+    <sql id="values_exclude_id">
+        #{userId}, #{picUrl}, #{type}, #{describe}, now(), #{status}
+    </sql>
+
+    <sql id="criteria">
+        <where>
+            <if test="userId != null">AND `user_id` = #{userId}</if>
+            <if test="picUrl != null">AND `pic_url` = #{picUrl}</if>
+            <if test="type != null">AND `type` = #{type}</if>
+            <if test="describe != null">AND `describe` = #{describe}</if>
+            <if test="uploadTime != null">AND `upload_time` = #{uploadTime}</if>
+            <if test="status != null">AND `status` = #{status}</if>
+        </where>
+    </sql>
+
+    <insert id="addList" parameterType="list" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb"/>
+        (<include refid="columns_exclude_id"/>)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.userId}, #{item.picUrl}, #{item.type}, #{item.describe}, now(), 1)
+        </foreach>
+    </insert>
+
+    <select id="getAll" resultType="Image">
+        SELECT
+        <include refid="columns_all"/>
+        FROM
+        <include refid="tb"/>
+        WHERE status=1
+        <if test="userId != null">
+            AND  user_id=#{userId}
+        </if>
+        ORDER BY upload_time DESC
+    </select>
+</mapper>

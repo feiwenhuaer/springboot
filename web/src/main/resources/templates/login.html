@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>first</title>
+    <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]>
+    <script src="/js/ie/respond.min.js"></script>
+    <script src="/js/ie/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- header -->
+<header id="header" class="navbar bg bg-black">
+    <a href="docs.html" class="btn btn-link pull-right"><i class="icon-question icon-xlarge text-default"></i></a>
+    <a class="navbar-brand" href="#">first</a>
+</header>
+<!-- / header -->
+<section id="content">
+    <div class="main padder">
+        <div class="row">
+            <div class="col-lg-4 col-offset-4 m-t-large">
+                <section class="panel">
+                    <header class="panel-heading text-center">
+                        Sign in
+                    </header>
+                    <form class="padder">
+                        <div class="block">
+                            <label class="control-label">Email</label>
+                            <input type="phone" placeholder="" class="form-control" id="phone">
+                        </div>
+                        <div class="block">
+                            <label class="control-label">Password</label>
+                            <input type="password" id="password" placeholder="Password" class="form-control">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Keep me logged in
+                            </label>
+                        </div>
+                        <a href="#" class="pull-right m-t-mini"><small>Forgot password?</small></a>
+                        <button type="button" class="btn btn-info" onclick="toLogin()">Sign in</button>
+                        <div class="line line-dashed"></div>
+                        <p class="text-muted text-center"><small>Do not have an account?</small></p>
+                        <a href="/signUp" class="btn btn-white btn-block">Create an account</a>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- footer -->
+<footer id="footer">
+    <div class="text-center padder clearfix">
+        <p>
+            <small>&copy; first 2018<a href="http://www.mycodes.net/" target="_blank">FIRST</a></small><br><br>
+        </p>
+    </div>
+</footer>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/app.plugin.js"></script>
+<script src="/js/app.data.js"></script>
+<script>
+    function toLogin(){
+        $.ajax({
+            type : 'Post',
+            url : '/user/login',
+            data: {"phone":$("#phone").val(),"password":$("#password").val()},
+            dataType : 'json',
+            success : function(obj) {
+                if(obj.status == true){
+                    location.href = "/index";
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

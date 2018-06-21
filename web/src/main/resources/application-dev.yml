@@ -1,0 +1,55 @@
+server:
+  session:
+    timeout: 30
+
+spring:
+  application:
+    name: feature
+  datasource:
+    url: jdbc:mysql://localhost:3306/lottery?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+    driverClassName: com.mysql.cj.jdbc.Driver
+    initialSize: 10
+    maxActive: 100
+    minIdle: 10
+    maxIdle: 50
+    maxWait: 60000
+    validationQuery: select 1
+  http:
+    encoding:
+      charset: utf8
+  freemarker:
+    allow-request-override: false
+    cache: true
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    suffix: .html
+    templateEncoding: UTF-8
+    templateLoaderPath: classpath:/templates/
+    expose-spring-macro-helpers: false
+  redis:
+    host: localhost
+    port: 6379
+    pool:
+      maxIdle: 8
+      minIdle: 0
+      maxWait: -1
+      timeout: 300
+    password: Xieyi1918
+    key:
+      timeout: 3600
+
+mybatis:
+  mapperLocations: classpath*:mapper/*Mapper.xml
+  typeAliasesPackage: ocean.model
+
+logging:
+  level.*: DEBUG
+  level.com.xy: DEBUG
+
+
+
