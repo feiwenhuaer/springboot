@@ -70,8 +70,8 @@ public class MyBatisConfig {
     }
 
     @Bean(name = "sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory( DataSource dataSource) {
-       log.debug(dataSource.getClass().toString());
+    public SqlSessionFactory sqlSessionFactory( DruidDataSource dataSource) {
+       log.error(dataSource.getClass().toString());
         //解决myBatis下 不能嵌套jar文件的问题
         VFS.addImplClass(SpringBootVfs.class);
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -82,7 +82,6 @@ public class MyBatisConfig {
             sqlSessionFactoryBean.setMapperLocations(resolver.getResources(mapperLocation));
             Resource mybatisConfigXml = resolver.getResource("classpath:mybatis-config.xml");
             sqlSessionFactoryBean.setConfigLocation(mybatisConfigXml);
-
             return sqlSessionFactoryBean.getObject();
         } catch (Exception e) {
             e.printStackTrace();

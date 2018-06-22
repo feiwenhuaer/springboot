@@ -1,4 +1,4 @@
-package ocean.config.qiNiu;
+package ocean.qiNiu;
 
 /**
  * 七牛云相关参数

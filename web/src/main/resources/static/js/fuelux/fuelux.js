@@ -348,7 +348,7 @@
 
 		this.options = $.extend(true, {}, $.fn.datagrid.defaults, options);
 
-		// Shim until v3 -- account for FuelUX select or native select for page size:
+		// Shim until v3 -- account for FuelUX select or native select for controller size:
 		if (this.$pagesize.hasClass('select')) {
 			this.options.dataOptions.pageSize = parseInt(this.$pagesize.select('selectedItem').value, 10);
 		} else {

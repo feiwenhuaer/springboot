@@ -18,7 +18,6 @@ import java.util.Objects;
 @Slf4j
 public class UserUtil {
     @Autowired
-    @Qualifier("redisCache")
     private JedisApi jedisApi;
 
     public  void setUser(HttpServletRequest request, User user){

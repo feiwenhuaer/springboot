@@ -1,13 +1,11 @@
-package ocean.page;
+package ocean.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import ocean.JedisApi;
 import ocean.enums.LoginEnum;
 import ocean.model.User;
 import ocean.response.ServerResponse;
 import ocean.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

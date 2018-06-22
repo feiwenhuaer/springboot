@@ -1,4 +1,4 @@
-package ocean.config.qiNiu;
+package ocean.qiNiu;
 
 import com.qiniu.http.Response;
 import com.qiniu.storage.UploadManager;

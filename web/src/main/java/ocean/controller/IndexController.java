@@ -1,14 +1,10 @@
-package ocean.page;
-
-
+package ocean.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import ocean.JedisApi;
 import ocean.response.ResponseHelper;
 import ocean.service.ArticleService;
 import ocean.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +39,7 @@ public class IndexController {
     public String  findById(@PathVariable(value = "id") String id, HttpServletRequest request, ModelMap modelMap) {
         modelMap.put("data",ResponseHelper.or500(articleService.findById(Long.valueOf(id))));
         modelMap.put("user",userUtil.getUser(request));
+        log.error(articleService.toString());
         return "detail";
     }
 
